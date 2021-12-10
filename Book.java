@@ -3,6 +3,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.File;
 
+
+/**
+ * Maxim Karpinsky
+ * ID: 2405869
+ * email: karpinsky@chapman.edu
+ * Course: CPSC 231
+ * Assignment: Programming Mastery Project 4: Library Database
+ */
 public class Book extends Publication
 {
   private String author;
@@ -11,6 +19,17 @@ public class Book extends Publication
   private FileOutputStream fileStream;
   private PrintWriter outFS;
 
+  public Book()
+  {
+    super();
+
+    author = "";
+    numPages = 0;
+    bindingType = "";
+    
+    fileStream = null;
+    outFS = null;
+  }
 
   public Book(String author, int numPages, String bindingType, String title, int yearPub, String publisher, int isbn)
   {
@@ -22,6 +41,68 @@ public class Book extends Publication
     fileStream = null;
     outFS = null;
   }
+
+  public Book(Book other)
+  {
+    super(other);
+    author = other.getAuthor();
+    numPages = other.getNumPages();
+    bindingType = other.getBindingType();
+  }
+
+  public String getAuthor()
+  {
+    return author;
+  }
+
+  public void setAuthor(String toSet)
+  {
+    author = toSet;
+  }
+
+  public int getNumPages()
+  {
+    return numPages;
+  }
+
+  public void setNumPages(int toSet)
+  {
+    numPages = toSet;
+  }
+
+  public String getBindingType()
+  {
+    return bindingType;
+  }
+
+  public void setBindingType(String toSet)
+  {
+    bindingType = toSet;
+  }
+
+  public String getType()
+  {
+    return "Book";
+  }
+
+  public String toString()
+  {
+    String bookString = "Publication Type: " + getType() + "\n" +
+                        super.toString() +
+                        "Author: " + getAuthor() + "\n" +
+                        "# of Pages: " + getNumPages() + "\n" +
+                        "Binding Type: " + getBindingType() + "\n";
+
+    return bookString;
+  }
+
+  public boolean equals(Book other)
+  {
+    return (super.equals(other) &&
+            getAuthor().equals(other.getAuthor()) &&
+            getNumPages() == other.getNumPages() &&
+            getBindingType().equals(other.getBindingType()));
+   }
 
   public void print(String fileName)
   {
@@ -44,9 +125,7 @@ public class Book extends Publication
       System.out.println("File Not Found: " + fileName);
     }
 
-    outFS.println("Author: " + author);
-    outFS.println("# of Pages: " + numPages);
-    outFS.println("Binding Type: " + bindingType);
+    outFS.print(toString());
 
     outFS.close();
   }

@@ -4,6 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Collections;
 
+
+/**
+ * Maxim Karpinsky
+ * ID: 2405869
+ * email: karpinsky@chapman.edu
+ * Course: CPSC 231
+ * Assignment: Programming Mastery Project 4: Library Database
+ */
 public class Database
 {
 
@@ -33,6 +41,40 @@ public class Database
     HashMap<Integer, Publication> database = new HashMap<Integer, Publication>();
 
     String userChoice = null;
+
+    /**
+     * Testing zone
+     **/
+
+     Book testBook = new Book("test", 42, "hardbook", "test book", 1999, "tester inc.", 12345);
+     database.put(testBook.getIsbn(), testBook);
+     Book testBook2 = new Book("test", 42, "hardbook", "test book", 1999, "tester inc.", 12345);
+     Book testBook3 = new Book("test", 21, "paperbook", "test book 2", 2021, "tester inc.", 13246);
+     Book testBook4 = new Book(testBook3);
+     System.out.println(testBook.equals(testBook2));
+     System.out.println(testBook.equals(testBook3));
+
+     Journal testJournal = new Journal("editor", 123, "test journal", 1999, "tester inc.", 12347);
+     database.put(testJournal.getIsbn(), testJournal);
+     Journal testJournal2 = new Journal("editor", 123, "test journal", 1999, "tester inc.", 12357);
+     Journal testJournal3 = new Journal("editor", 346, "test journal", 2355, "tester inc.", 12347);
+     Journal testJournal4 = new Journal(testJournal3);
+     System.out.println(testJournal.equals(testJournal2));
+     System.out.println(testJournal.equals(testJournal3));
+
+     EJournal testEJournal = new EJournal("url.com", 423, "editor", 123, "test ejournal", 1999, "tester inc.", 12348);
+     database.put(testEJournal.getIsbn(), testEJournal);
+     EJournal testEJournal2 = new EJournal("url.com", 423, "editor", 123, "test ejournal", 1999, "tester inc.", 12348);
+     EJournal testEJournal3 = new EJournal("url.com", 423, "editor", 346, "test ejournal", 2355, "tester inc.", 12348);
+     EJournal testEjournal4 = new EJournal(testEJournal3);
+     System.out.println(testEJournal.equals(testEJournal2));
+     System.out.println(testEJournal.equals(testEJournal3));
+
+
+
+     /**
+      * End Testing Zone
+      */
 
     do
     {

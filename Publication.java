@@ -3,6 +3,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.File;
 
+/**
+ * Maxim Karpinsky
+ * ID: 2405869
+ * email: karpinsky@chapman.edu
+ * Course: CPSC 231
+ * Assignment: Programming Mastery Project 4: Library Database
+ */
 public abstract class Publication implements Comparable<Publication>, Printable
 {
   private String title;
@@ -10,7 +17,16 @@ public abstract class Publication implements Comparable<Publication>, Printable
   private String publisher;
   private int isbn;
   private FileOutputStream fileStream;
-  private PrintWriter outFS;
+
+  public Publication()
+  {
+    title = "";
+    yearPub = 0;
+    publisher = "";
+    isbn = 0;
+
+    fileStream = null;
+  }
 
   public Publication(String title, int yearPub, String publisher, int isbn)
   {
@@ -20,12 +36,23 @@ public abstract class Publication implements Comparable<Publication>, Printable
     this.isbn = isbn;
 
     fileStream = null;
-    outFS = null;
+  }
+
+  public Publication(Publication other)
+  {
+    title = other.getTitle();
+    yearPub = other.getYearPub();
+    publisher = other.getPublisher();
+    isbn = other.getIsbn();
   }
 
   public String getTitle()
   {
     return title;
+  }
+  public void setTitle(String toSet)
+  {
+    title = toSet;
   }
 
   public int getYearPub()
@@ -33,14 +60,47 @@ public abstract class Publication implements Comparable<Publication>, Printable
     return yearPub;
   }
 
+  public void setYearPub(int toSet)
+  {
+    yearPub = toSet;
+  }
+
   public String getPublisher()
   {
     return publisher;
   }
 
+  public void setPublisher(String toSet)
+  {
+    publisher = toSet;
+  }
+
   public int getIsbn()
   {
     return isbn;
+  }
+
+  public void setIsbn(int toSet)
+  {
+    isbn = toSet;
+  }
+
+  public String toString()
+  {
+    String publicationString = "Publication Title: " + getTitle() + "\n" +
+                               "Publication Year: " + getYearPub() + "\n" +
+                               "Publisher: " + getPublisher() + "\n" +
+                               "ISBN: " + getIsbn() + "\n";
+
+    return publicationString;
+  }
+
+  public boolean equals(Publication other)
+  {
+    return(getTitle().equals(other.getTitle()) &&
+           getYearPub() == other.getYearPub() &&
+           getPublisher().equals(other.getPublisher()) &&
+           getIsbn() == other.getIsbn());
   }
 
   public void print(String fileName)
@@ -61,20 +121,13 @@ public abstract class Publication implements Comparable<Publication>, Printable
 
       File file = new File("exportLog/" + fileName);
       fileStream = new FileOutputStream(file);
-      outFS = new PrintWriter(fileStream);
+
     }
     catch(IOException e)
     {
       System.out.println(e.toString());
       System.out.println("File Not Found " + fileName);
     }
-
-    outFS.println("Publication Title: " + getTitle());
-    outFS.println("Publication Year: " + getYearPub());
-    outFS.println("Publisher: " + getPublisher());
-    outFS.println("ISBN: " + getIsbn());
-
-    outFS.close();
   }
 
   public int compareTo(Publication other)
