@@ -12,9 +12,25 @@ import java.util.Collections;
  * Course: CPSC 231
  * Assignment: Programming Mastery Project 4: Library Database
  */
+
+/**
+ * Database class to create a Library Database to store publications along
+ * with an interface for ease of Database use.
+ */
 public class Database
 {
 
+  /**
+   * Static method to handle when user is prompted for a integer response to
+   * a question. Keeps asking question until a valid integer is given,
+   * this essentially catches errors when a user tries to use incompatible data
+   * types for int parameters.
+   * @param  askMessage         Message to ask the user
+   * @param  errorMessage       Error message to give user when incompatible
+   *                            type is given.
+   * @param  scan               Scanner object
+   * @return              the user's response to a question
+   */
   public static int handleInt(String askMessage, String errorMessage, Scanner scan)
   {
     int value = -1;
@@ -34,6 +50,10 @@ public class Database
     return value;
   }
 
+  /**
+   * Main method to create a database and user interface to access databse.
+   * @param args
+   */
   public static void main(String[] args)
   {
     Scanner scan = new Scanner(System.in);
@@ -43,32 +63,32 @@ public class Database
     String userChoice = null;
 
     /**
-     * Testing zone
+     * Testing zone, commented out lines that affect database for submission
      **/
 
      Book testBook = new Book("test", 42, "hardbook", "test book", 1999, "tester inc.", 12345);
-     database.put(testBook.getIsbn(), testBook);
+     //database.put(testBook.getIsbn(), testBook);
      Book testBook2 = new Book("test", 42, "hardbook", "test book", 1999, "tester inc.", 12345);
      Book testBook3 = new Book("test", 21, "paperbook", "test book 2", 2021, "tester inc.", 13246);
      Book testBook4 = new Book(testBook3);
-     System.out.println(testBook.equals(testBook2));
-     System.out.println(testBook.equals(testBook3));
+     //System.out.println(testBook.equals(testBook2));
+     //System.out.println(testBook.equals(testBook3));
 
      Journal testJournal = new Journal("editor", 123, "test journal", 1999, "tester inc.", 12347);
-     database.put(testJournal.getIsbn(), testJournal);
+     //database.put(testJournal.getIsbn(), testJournal);
      Journal testJournal2 = new Journal("editor", 123, "test journal", 1999, "tester inc.", 12357);
      Journal testJournal3 = new Journal("editor", 346, "test journal", 2355, "tester inc.", 12347);
      Journal testJournal4 = new Journal(testJournal3);
-     System.out.println(testJournal.equals(testJournal2));
-     System.out.println(testJournal.equals(testJournal3));
+     //System.out.println(testJournal.equals(testJournal2));
+     //System.out.println(testJournal.equals(testJournal3));
 
      EJournal testEJournal = new EJournal("url.com", 423, "editor", 123, "test ejournal", 1999, "tester inc.", 12348);
-     database.put(testEJournal.getIsbn(), testEJournal);
+     //database.put(testEJournal.getIsbn(), testEJournal);
      EJournal testEJournal2 = new EJournal("url.com", 423, "editor", 123, "test ejournal", 1999, "tester inc.", 12348);
      EJournal testEJournal3 = new EJournal("url.com", 423, "editor", 346, "test ejournal", 2355, "tester inc.", 12348);
      EJournal testEjournal4 = new EJournal(testEJournal3);
-     System.out.println(testEJournal.equals(testEJournal2));
-     System.out.println(testEJournal.equals(testEJournal3));
+     //System.out.println(testEJournal.equals(testEJournal2));
+     //System.out.println(testEJournal.equals(testEJournal3));
 
 
 
@@ -76,6 +96,10 @@ public class Database
       * End Testing Zone
       */
 
+    /**
+     * Creates while loop to keep asking user database options until they
+     * quit the database.
+     */
     do
     {
       System.out.println("1 - Create a publication");
@@ -92,6 +116,9 @@ public class Database
       switch(userChoice)
       {
 
+        /**
+         * Case for when user wants to create a new publication
+         */
         case "1":
 
           String pubTitle = null;
@@ -108,6 +135,12 @@ public class Database
 
           String url = null;
           int pubFee = -1;
+
+          /**
+           * First asks for generic publication data, because all publication
+           * will have this regardless of type, then moves on to specific
+           * publication.
+           */
 
           System.out.println("Entering general publication data... You will be able to select the publication type after.");
           System.out.println();
@@ -128,6 +161,10 @@ public class Database
 
           System.out.println();
 
+          /**
+           * Creates a while loop until user selects and fills data for a
+           * specific publication type.
+           */
           do
           {
             validChoice = true;
@@ -142,6 +179,9 @@ public class Database
 
             switch(pubChoice)
             {
+              /**
+               * Case for creating a Book Entry
+               */
               case "1":
 
                 System.out.print("Author: ");
@@ -153,6 +193,10 @@ public class Database
                 bindType = scan.nextLine();
 
                 break;
+
+              /**
+               * Case for creating a Journal entry
+               */
               case "2":
 
                 System.out.print("Editor: ");
@@ -161,6 +205,9 @@ public class Database
                 issueNum = handleInt("Issue #: ", "Enter a valid Issue #!", scan);
 
                 break;
+              /**
+               * Case for creating a EJournal entry
+               */
               case "3":
 
                 System.out.print("Editor: ");
@@ -174,6 +221,9 @@ public class Database
                 pubFee = handleInt("Publication Fee: ", "Enter a valid Publication Fee!", scan);
 
                 break;
+              /**
+               * Repeats loop if invalid choice is inputted.
+               */
               default:
                 System.out.println("Invalid Choice.");
                 validChoice = false;
@@ -184,6 +234,9 @@ public class Database
           }
           while (!validChoice);
 
+          /**
+           * Creates publication based on final case before while loop exited.
+           */
           if(pubChoice.equals("1"))
           {
             Book newBook = new Book(author, numPages, bindType, pubTitle, pubYear, publisher, isbn);
@@ -205,12 +258,21 @@ public class Database
           System.out.println();
 
           break;
+        /**
+         * Case to export a specific publication object in database to file.
+         */
         case "2":
 
           System.out.print("File name to export to: ");
           String fileName = scan.nextLine();
 
           int pulledISBN = handleInt("ISBN of the Publication: ", "Enter a valid ISBN!", scan);
+
+          /**
+           * Tries to fetch publication object based on ISBN, if one not
+           * found catches a NullPointerException and tells user wasn't able
+           * to find.
+           */
           try
           {
             database.get(pulledISBN).print(fileName);
@@ -225,6 +287,9 @@ public class Database
           System.out.println();
 
           break;
+        /**
+         * Case for when user tries to list all Publication objects in database
+         */
         case "3":
           List<Publication> sortedList = new LinkedList<Publication>(database.values());
           Collections.sort(sortedList);
@@ -247,6 +312,10 @@ public class Database
           System.out.println();
 
           break;
+        /**
+         * Case for when user wants to delete a publication object from the
+         * database.
+         */
         case "4":
 
           int isbnDel = handleInt("Publication to Delete ISBN value: ", "Enter a valid ISBN!", scan);
@@ -265,9 +334,15 @@ public class Database
           System.out.println();
 
           break;
+        /**
+         * Case when user wants to exit the database.
+         */
         case "5":
           System.out.println("Exiting Database.");
           break;
+        /**
+         * default case when user selects an invalid choice, repeats loop.
+         */
         default:
           System.out.println("Invalid Choice.");
           break;
